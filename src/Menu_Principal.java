@@ -2,11 +2,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.border.EmptyBorder;
 
 public class Menu_Principal {
+    private JComboBox comboBoxFormacion; // Para Licenciatura, Maestría, Doctorado
+    private JTextField textFieldInstitucion; // Para Institución
+    private JTextField textFieldTitulacion;  // Para Titulación (Año)
+    private JTextField textFieldCedula;
     private JPanel Panel_Admi;
     private JPanel Panel_Superior;
     private JButton btnMenu1;
@@ -60,16 +63,11 @@ public class Menu_Principal {
     private JPanel panelCheck;
     private JTabbedPane tabbedPane1;
     private JPanel panelExperiencia1;
-    private JPanel panelExperiencia2;
     private JTextField textField2;
     private JTextField textField3;
-    private JButton imgButton;
-    private JButton imgButton1;
     private JTextField textField4;
-    private JComboBox comboBox5;
     private JButton agregarALaTablaButton;
     private JButton actualizarButton1;
-    private JScrollPane scpExperiencia;
     private JTable tbExperiencia;
     private JTextField textField5;
     private JTextField textField6;
@@ -80,115 +78,190 @@ public class Menu_Principal {
     private JTextField textField11;
     private JTable tbMateria;
     private JScrollPane scpMateria;
+    private JPanel panelExperiencia2;
+    private JComboBox comboBox5;
+    private JButton imgButton;
+    private JButton imgButton1;
+    private JScrollPane scpExperiencia;
+
+    // Modelos de tablas
     private DefaultTableModel tablaActividad;
     private DefaultTableModel tablaRegistros;
     private DefaultTableModel tablaExperiencia;
     private DefaultTableModel tablaMateria;
 
+    class BackgroundPanelMenu extends JPanel {
+        private Image image;
+        private String welcomeText;
+
+        public BackgroundPanelMenu(String imagePath, String text) {
+            this.welcomeText = text;
+            setLayout(new GridBagLayout());
+            try {
+                image = new ImageIcon(getClass().getResource(imagePath)).getImage();
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar la imagen de fondo: " + imagePath);
+                setBackground(new Color(224, 224, 224));
+            }
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (image != null) {
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+
+            if (welcomeText != null) {
+                g.setColor(new Color(30, 30, 30));
+                g.setFont(new Font("Segoe UI", Font.BOLD, 48));
+                FontMetrics fm = g.getFontMetrics();
+                int x = (getWidth() - fm.stringWidth(welcomeText)) / 2;
+                int y = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
+                g.drawString(welcomeText, x, y);
+            }
+        }
+    }
+
+
     public Menu_Principal() {
         initComponents();
+        setupWelcomePanel();
 
-        btnMenu1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(1);
-            }
-        });
-        btnMenu2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(2);
-            }
-        });
-        btnMenu13.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(3);
-            }
-        });
-        btnBuscarArch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Buscando Archivo\n"+"¡Por favor Espere!");
-            }
-        });
-        btnRegistro.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Actividad Registrada");
-            }
-        });
-        btnRegresar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(0);
-            }
-        });
-        btnSiguiente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(2);
-            }
-        });
-        actualizarButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Dato Actualizado");
-            }
-        });
-        agregarALaTablaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Dato Agregada");
-            }
-        });
-        actualizarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Instructor Actualizado");
-            }
-        });
-        agregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Instructor Agregado");
-            }
-        });
-        eliminarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Instructor Eliminado");
-            }
-        });
-        editarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Datos Editados");
-            }
-        });
-        siguienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(0);
-            }
-        });
-        regresarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbPanel.setSelectedIndex(2);
-            }
-        });
+
+        if (btnMenu1 != null) btnMenu1.setText("Instructores");
+        if (btnMenu2 != null) btnMenu2.setText("Cursos");
+        if (btnMenu13 != null) btnMenu13.setText("Asistencias");
+
+
+        if (btnMenu1 != null) btnMenu1.addActionListener(e -> tbPanel.setSelectedIndex(1));
+
+        if (btnMenu2 != null) btnMenu2.addActionListener(e -> tbPanel.setSelectedIndex(2));
+
+        if (btnMenu13 != null) btnMenu13.addActionListener(e -> tbPanel.setSelectedIndex(3));
+
+
+        if (btnBuscarArch != null) {
+            btnBuscarArch.addActionListener(e -> JOptionPane.showMessageDialog(null, "Buscando Archivo\n"+"¡Por favor Espere!"));
+        }
+
+        if (btnRegistro != null) {
+            btnRegistro.addActionListener(e -> {
+                if (txtActividad.getText().isEmpty() || txtPorcentaje.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Debe rellenar Actividad y Porcentaje para registrar", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    tablaActividad.addRow(new Object[]{txtActividad.getText(), txtPorcentaje.getText()});
+                    txtActividad.setText("");
+                    txtPorcentaje.setText("");
+                    JOptionPane.showMessageDialog(null, "Actividad Registrada");
+                }
+            });
+        }
+
+
+        if (btnRegresar != null) {
+            btnRegresar.addActionListener(e -> tbPanel.setSelectedIndex(tbPanel.getSelectedIndex() - 1));
+        }
+
+        if (btnSiguiente != null) {
+            btnSiguiente.addActionListener(e -> tbPanel.setSelectedIndex(tbPanel.getSelectedIndex() + 1));
+        }
+
+        if (regresarButton != null) {
+            regresarButton.addActionListener(e -> tbPanel.setSelectedIndex(tbPanel.getSelectedIndex() - 1));
+        }
+
+        if (siguienteButton != null) {
+            siguienteButton.addActionListener(e -> tbPanel.setSelectedIndex(tbPanel.getSelectedIndex() + 1));
+        }
+
+        // Lógica de Agregar Instructor (En Pestaña Instructores)
+        if (agregarButton != null) {
+            agregarButton.addActionListener(e -> {
+                // Validación de campos mínimos (Nombre, CURP, RFC)
+                if (textField5.getText().isEmpty() || textField6.getText().isEmpty() || textField7.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Rellene Nombre, CURP y RFC para agregar al Instructor", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Captura los valores (Asumiendo los bindings de la tabla anterior)
+                    String nombre = textField5.getText();
+                    String curp = textField6.getText();
+                    String rfc = textField7.getText();
+                    String nivelAcademico = textField8.getText(); // O del JComboBox si lo mapeaste diferente
+                    String especialidad = textField9.getText();
+
+                    // CAPTURA DE DATOS ACADÉMICOS
+                    // Nota: Usa el binding real de tu JComboBox (ej: comboBox2 o comboBox3)
+                    String formacionAcademica = (String) comboBoxFormacion.getSelectedItem();
+                    String institucion = textFieldInstitucion.getText();
+                    String titulacion = textFieldTitulacion.getText();
+                    String cedula = textFieldCedula.getText();
+
+                    // AÑADIMOS 9 CAMPOS A LA TABLA
+                    tablaRegistros.addRow(new Object[]{
+                            nombre, curp, rfc, nivelAcademico, especialidad,
+                            formacionAcademica, institucion, titulacion, cedula
+                    });
+
+                    JOptionPane.showMessageDialog(null, "Instructor Agregado con Datos Académicos");
+
+                    // Limpiar campos después de agregar (Asegúrate de limpiar todos los campos relevantes)
+                    textField5.setText(""); textField6.setText(""); textField7.setText("");
+                    textField8.setText(""); textField9.setText("");
+
+                    // Limpiar campos académicos
+                    // comboBoxFormacion.setSelectedIndex(0); // Si quieres resetear el combo
+                    textFieldInstitucion.setText("");
+                    textFieldTitulacion.setText("");
+                    textFieldCedula.setText("");
+                }
+            });
+        }
+
+        if (agregarALaTablaButton != null) {
+            agregarALaTablaButton.addActionListener(e -> {
+                if(textField2.getText().isEmpty() || textField3.getText().isEmpty() || textField4.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Rellene todos los campos de Experiencia", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    tablaExperiencia.addRow(new Object[]{textField2.getText(), textField3.getText(), textField4.getText(), "Ver actividades"});
+                    JOptionPane.showMessageDialog(null, "Experiencia Agregada");
+                    textField2.setText(""); textField3.setText(""); textField4.setText("");
+                }
+            });
+        }
+
+        if (actualizarButton1 != null) actualizarButton1.addActionListener(e -> JOptionPane.showMessageDialog(null, "Dato Actualizado"));
+        if (actualizarButton != null) actualizarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Instructor Actualizado"));
+        if (eliminarButton != null) eliminarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Instructor Eliminado"));
+        if (editarButton != null) editarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Datos Editados"));
+        if (cancelarButton != null) cancelarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Acción Cancelada"));
+    }
+
+    private void setupWelcomePanel() {
+        if (Bienvenida != null) {
+            Bienvenida.setLayout(new BorderLayout());
+            Bienvenida.add(new BackgroundPanelMenu("/resourses/ImagenMenuPrincipal.png", "¡Bienvenido!"), BorderLayout.CENTER);
+        }
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Menu_Principal");
-        frame.setContentPane(new Menu_Principal().Panel_Admi);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        SwingUtilities.invokeLater(() -> {
+            new Menu_Principal().abrirVentana();
+        });
+    }
+
+    // Método para abrir la ventana (TAMAÑO GRANDE)
+    public void abrirVentana() {
+        JFrame frame = new JFrame("Menú Principal - Cursos Intersemestrales");
+        frame.setContentPane(this.Panel_Admi);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        frame.setPreferredSize(new Dimension(1200, 750));
+
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    //Metodo para inicializar las configuraciones de las tablas
     private void initComponents(){
         configuracionTablaActividad();
         configuracionTablaRegistrosBD();
@@ -197,196 +270,116 @@ public class Menu_Principal {
     }
 
     private void configuracionTablaActividad() {
-        // TODO: place custom component creation code here
-        //this.tablaModeloClientes = new DefaultTableModel(0, 4);
-        // Evitamos la edicion de los valores de las celdas de la tabla
-        this.tablaActividad = new DefaultTableModel(10,2){
+        this.tablaActividad = new DefaultTableModel(0,2){
             @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
+            public boolean isCellEditable(int row, int column){ return false; }
         };
-        String[] cabeceros = {"Actividad", "Porcentaje"};
+        String[] cabeceros = {"Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad", "Correo Electrónico", "Contraseña"};
         this.tablaActividad.setColumnIdentifiers(cabeceros);
-        this.tbActividad.setModel(tablaActividad);
-        // Restringimos la seleccion de la tabla a un solo registro
-        this.tbActividad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Cargar listado de actividades
-        // ▼▼▼ CÓDIGO PARA ESTILIZAR EL CABECERO CON RENDERER ▼▼▼
+        if (this.tbActividad != null) {
+            this.tbActividad.setModel(tablaActividad);
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus,
-                                                           int row, int column) {
-                // Llama al método padre para obtener el componente base (un JLabel)
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Aplica tus estilos personalizados
-                c.setBackground(new Color(82, 83, 83)); // Fondo
-                c.setForeground(Color.WHITE);                   // Letras blancas
-                c.setFont(new Font("Segoe UI", Font.BOLD, 16));  // Fuente más moderna
-
-                // Centra el texto del cabecero
-                setHorizontalAlignment(JLabel.CENTER);
-
-                // Agrega un borde para que se vea mejor
-                setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
-
-                return c;
-            }
-        };
-        // 2. Aplica tu renderizador personalizado al cabecero de la tabla
-        tbActividad.getTableHeader().setDefaultRenderer(headerRenderer);
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100));
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbActividad.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
     }
 
     private void configuracionTablaRegistrosBD() {
-        // TODO: place custom component creation code here
-        //this.tablaModeloClientes = new DefaultTableModel(0, 4);
-        // Evitamos la edicion de los valores de las celdas de la tabla
-        this.tablaRegistros = new DefaultTableModel(10,5){
+        this.tablaRegistros = new DefaultTableModel(0, 9) {
             @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
+            public boolean isCellEditable(int row, int column){ return false; }
         };
-        String[] cabeceros = {"Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad"};
-        this.tablaRegistros.setColumnIdentifiers(cabeceros);
-        this.tbRegistros.setModel(tablaRegistros);
-        // Restringimos la seleccion de la tabla a un solo registro
-        this.tbRegistros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Cargar listado de actividades
-        // ▼▼▼ CÓDIGO PARA ESTILIZAR EL CABECERO CON RENDERER ▼▼▼
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus,
-                                                           int row, int column) {
-                // Llama al método padre para obtener el componente base (un JLabel)
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        String[] cabeceros = {"Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad", "Formación Académica", "Institución", "Titulación (Año)", "Cédula"};        this.tablaRegistros.setColumnIdentifiers(cabeceros);
 
-                // Aplica tus estilos personalizados
-                c.setBackground(new Color(82, 83, 83)); // Fondo
-                c.setForeground(Color.WHITE);                   // Letras blancas
-                c.setFont(new Font("Segoe UI", Font.BOLD, 16));  // Fuente más moderna
+        if (this.tbRegistros != null) {
+            this.tbRegistros.setModel(tablaRegistros);
+            this.tbRegistros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-                // Centra el texto del cabecero
-                setHorizontalAlignment(JLabel.CENTER);
-
-                // Agrega un borde para que se vea mejor
-                setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
-
-                return c;
-            }
-        };
-        // 2. Aplica tu renderizador personalizado al cabecero de la tabla
-        tbRegistros.getTableHeader().setDefaultRenderer(headerRenderer);
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100)); // #455A64
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbRegistros.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
     }
 
     private void configuracionTablaExperiencia() {
-        // TODO: place custom component creation code here
-        //this.tablaModeloClientes = new DefaultTableModel(0, 4);
-        // Evitamos la edicion de los valores de las celdas de la tabla
-        this.tablaExperiencia = new DefaultTableModel(10,4){
+        this.tablaExperiencia = new DefaultTableModel(0,4){
             @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
+            public boolean isCellEditable(int row, int column){ return false; }
         };
         String[] cabeceros = {"Nombre del Proyecto", "Fecha Inicio", "Fecha Fin", "Actividades"};
         this.tablaExperiencia.setColumnIdentifiers(cabeceros);
-        this.tbExperiencia.setModel(tablaExperiencia);
-        // Restringimos la seleccion de la tabla a un solo registro
-        this.tbExperiencia.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Cargar listado de actividades
-        // ▼▼▼ CÓDIGO PARA ESTILIZAR EL CABECERO CON RENDERER ▼▼▼
+        if (this.tbExperiencia != null) {
+            this.tbExperiencia.setModel(tablaExperiencia);
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus,
-                                                           int row, int column) {
-                // Llama al método padre para obtener el componente base (un JLabel)
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Aplica tus estilos personalizados
-                c.setBackground(new Color(82, 83, 83)); // Fondo
-                c.setForeground(Color.WHITE);                   // Letras blancas
-                c.setFont(new Font("Segoe UI", Font.BOLD, 16));  // Fuente más moderna
-
-                // Centra el texto del cabecero
-                setHorizontalAlignment(JLabel.CENTER);
-
-                // Agrega un borde para que se vea mejor
-                setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
-
-                return c;
-            }
-        };
-        // 2. Aplica tu renderizador personalizado al cabecero de la tabla
-        tbExperiencia.getTableHeader().setDefaultRenderer(headerRenderer);
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100)); // #455A64
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbExperiencia.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
     }
 
     private void configuracionTablaMateria() {
-        // TODO: place custom component creation code here
-        //this.tablaModeloClientes = new DefaultTableModel(0, 4);
-        // Evitamos la edicion de los valores de las celdas de la tabla
-        this.tablaMateria = new DefaultTableModel(23,4){
+        this.tablaMateria = new DefaultTableModel(0,4){
             @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
+            public boolean isCellEditable(int row, int column){ return false; }
         };
         String[] cabeceros = {"Materia", "Periodo", "Instructor", "Experiencia"};
         this.tablaMateria.setColumnIdentifiers(cabeceros);
-        this.tbMateria.setModel(tablaMateria);
-        // Restringimos la seleccion de la tabla a un solo registro
-        this.tbMateria.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Cargar listado de actividades
-        // ▼▼▼ CÓDIGO PARA ESTILIZAR EL CABECERO CON RENDERER ▼▼▼
+        if (this.tbMateria != null) {
+            this.tbMateria.setModel(tablaMateria);
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus,
-                                                           int row, int column) {
-                // Llama al método padre para obtener el componente base (un JLabel)
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Aplica tus estilos personalizados
-                c.setBackground(new Color(82, 83, 83)); // Fondo
-                c.setForeground(Color.WHITE);                   // Letras blancas
-                c.setFont(new Font("Segoe UI", Font.BOLD, 16));  // Fuente más moderna
-
-                // Centra el texto del cabecero
-                setHorizontalAlignment(JLabel.CENTER);
-
-                // Agrega un borde para que se vea mejor
-                setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
-
-                return c;
-            }
-        };
-        // 2. Aplica tu renderizador personalizado al cabecero de la tabla
-        tbMateria.getTableHeader().setDefaultRenderer(headerRenderer);
-    }
-
-    public void abrirVentana() {
-        JFrame frame = new JFrame("Menú Principal");
-        frame.setContentPane(this.Panel_Admi); // Usa el panel de ESTA instancia
-
-        // MUY IMPORTANTE: Usa DISPOSE_ON_CLOSE si esta no es la ventana que cierra toda la app.
-        // Si esta es la ventana principal, puedes dejar EXIT_ON_CLOSE.
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        frame.pack(); // Ajusta el tamaño de la ventana a los componentes
-        frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
-        frame.setVisible(true);
-    }
-
-    //Metodo para
-    public JPanel getMenu_Principal() {
-        return Panel_Admi;
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100));
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbMateria.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
     }
 }
