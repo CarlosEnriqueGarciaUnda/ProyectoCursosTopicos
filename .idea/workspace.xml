@@ -4,29 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Proyecto_CURSOS.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/InicioSesion.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/InicioSesion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu_Principal.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu_Principal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_CursoInter.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_CursoInter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_Cursos.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_Cursos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_Instructor.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Panel_Instructor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resourses/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resourses/LOGO ITO.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resourses/LOGO TECNM.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resourses/ito imagen.2png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resourses/ito imagen.png" afterDir="false" />
+    <list default="true" id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="Primer Commit">
+      <change afterPath="$PROJECT_DIR$/src/resourses/imagenTecnm.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InicioSesion.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/InicioSesion.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +16,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/CarlosEnriqueGarciaUnda/ProyectoCursosTopicos.git",
+    "accountId": "959ca1de-3b2d-49b7-81f4-756c6b7aa3c1"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 1
 }]]></component>
@@ -49,8 +35,10 @@
     "Application.InicioSesion.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Pollo/Downloads/Proyecto_CURSOS/Proyecto_CURSOS/src/resourses",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -83,6 +71,19 @@
       <option name="presentableId" value="Default" />
       <updated>1760580922612</updated>
     </task>
+    <task id="LOCAL-00001" summary="Primer Commit">
+      <option name="closed" value="true" />
+      <created>1760585754987</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1760585754987</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Primer Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Primer Commit" />
   </component>
 </project>
