@@ -298,26 +298,44 @@ public class Menu_Principal {
 
         if (btnGuardarAsistencia != null) {
             btnGuardarAsistencia.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Asistencias guardadas correctamente");
+                if (textField2.getText().isEmpty() || textField3.getText().isEmpty() || textField4.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Complete todos los campos del proyecto", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Agregar datos a la tabla de asistencias
+                    String tipoExperiencia = comboBox5 != null ? (String) comboBox5.getSelectedItem() : "";
+                    tablaAsistencias.addRow(new Object[]{
+                            textField2.getText(),
+                            textField3.getText(),
+                            textField4.getText(),
+                            tipoExperiencia
+                    });
+                    JOptionPane.showMessageDialog(null, "Asistencia guardada correctamente");
+
+                    // Limpiar campos después de guardar
+                    textField2.setText("");
+                    textField3.setText("");
+                    textField4.setText("");
+                    if (comboBox5 != null) comboBox5.setSelectedIndex(0);
+                }
             });
         }
 
         if (btnLimpiarAsistencia != null) {
             btnLimpiarAsistencia.addActionListener(e -> {
+                // Limpiar tabla de asistencias
                 tablaAsistencias.setRowCount(0);
-                JOptionPane.showMessageDialog(null, "Registros de asistencia limpiados");
-            });
-        }
-
-        if (btnReporteAsistencia != null) {
-            btnReporteAsistencia.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Generando reporte de asistencias...");
+                // Limpiar campos
+                textField2.setText("");
+                textField3.setText("");
+                textField4.setText("");
+                if (comboBox5 != null) comboBox5.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Campos limpiados");
             });
         }
 
         if (btnRegresarAsistencia != null) {
             btnRegresarAsistencia.addActionListener(e -> {
-                tbPanel.setSelectedIndex(0);
+                tbPanel.setSelectedIndex(0); // Regresar al inicio
             });
         }
 
@@ -547,15 +565,16 @@ public class Menu_Principal {
         this.tablaAsistencias = new DefaultTableModel(0, 4) {
             @Override
             public boolean isCellEditable(int row, int column){
-                return column >= 2; // Solo las columnas de asistencia son editables
+                return false; // Todas las celdas son de solo lectura
             }
         };
 
-        String[] cabeceros = {"Nombre", "Matrícula", "Asistencia", "Observaciones"};
+        String[] cabeceros = {"Nombre del Proyecto", "Fecha Inicio", "Fecha Fin", "Tipo de Experiencia"};
         this.tablaAsistencias.setColumnIdentifiers(cabeceros);
 
         if (this.tbAsistencias != null) {
             this.tbAsistencias.setModel(tablaAsistencias);
+            this.tbAsistencias.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
                 @Override
