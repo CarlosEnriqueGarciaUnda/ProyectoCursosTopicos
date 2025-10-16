@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Proyecto_CURSOS.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/InicioSesion.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/InicioSesion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Menu_Principal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Menu_Principal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_CursoInter.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_CursoInter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_Cursos.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_Cursos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_Instructor.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Panel_Instructor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resourses/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resourses/LOGO ITO.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resourses/LOGO TECNM.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resourses/ito imagen.2png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resourses/ito imagen.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="3482XiVX81QPeVCZy0KQBvtgaPK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.InicioSesion.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="InicioSesion" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="InicioSesion" />
+      <module name="Proyecto_CURSOS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.InicioSesion" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="" />
+      <created>1760580922612</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760580922612</updated>
+    </task>
+    <servers />
+  </component>
+</project>
