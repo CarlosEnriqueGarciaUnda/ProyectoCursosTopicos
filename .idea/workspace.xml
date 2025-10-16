@@ -4,24 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="Tercer Commit">
+    <list default="true" id="fee70e63-0cba-4a3d-b581-9ce73f98909f" name="Changes" comment="Cuarto Commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InicioSesion.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/InicioSesion.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InicioSesion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InicioSesion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Menu_Principal.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu_Principal.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Menu_Principal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu_Principal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_CursoInter.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_CursoInter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_Cursos.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_Cursos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_Instructor.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panel_Instructor.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,8 +51,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Pollo/Downloads/Proyecto_CURSOS/Proyecto_CURSOS/src/resourses",
@@ -130,13 +128,22 @@
       <option name="project" value="LOCAL" />
       <updated>1760586883198</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Cuarto Commit">
+      <option name="closed" value="true" />
+      <created>1760627348486</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760627348486</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Primer Commit" />
     <MESSAGE value="SegundoCommit" />
     <MESSAGE value="Tercer Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tercer Commit" />
+    <MESSAGE value="Cuarto Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuarto Commit" />
   </component>
 </project>

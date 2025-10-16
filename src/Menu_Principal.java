@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
 
 public class Menu_Principal {
+    // Campos existentes...
     private JComboBox comboBoxFormacion; // Para Licenciatura, Maestría, Doctorado
     private JTextField textFieldInstitucion; // Para Institución
     private JTextField textFieldTitulacion;  // Para Titulación (Año)
@@ -84,6 +85,23 @@ public class Menu_Principal {
     private JButton imgButton1;
     private JScrollPane scpExperiencia;
 
+    // NUEVAS DECLARACIONES PARA DATOS DEL CURSO
+    private JTable tbCursos;
+    private JScrollPane scpCursos;
+    private DefaultTableModel tablaCursos;
+
+    // NUEVAS DECLARACIONES PARA ASISTENCIAS
+    private JTable tbAsistencias;
+    private JScrollPane scpAsistencias;
+    private JComboBox comboCursosAsistencia;
+    private JTextField textFieldFecha;
+    private JButton btnAgregarFecha;
+    private JButton btnGuardarAsistencia;
+    private JButton btnLimpiarAsistencia;
+    private JButton btnReporteAsistencia;
+    private JButton btnRegresarAsistencia;
+    private DefaultTableModel tablaAsistencias;
+
     // Modelos de tablas
     private DefaultTableModel tablaActividad;
     private DefaultTableModel tablaRegistros;
@@ -123,23 +141,17 @@ public class Menu_Principal {
         }
     }
 
-
     public Menu_Principal() {
         initComponents();
         setupWelcomePanel();
-
 
         if (btnMenu1 != null) btnMenu1.setText("Instructores");
         if (btnMenu2 != null) btnMenu2.setText("Cursos");
         if (btnMenu13 != null) btnMenu13.setText("Asistencias");
 
-
         if (btnMenu1 != null) btnMenu1.addActionListener(e -> tbPanel.setSelectedIndex(1));
-
         if (btnMenu2 != null) btnMenu2.addActionListener(e -> tbPanel.setSelectedIndex(2));
-
         if (btnMenu13 != null) btnMenu13.addActionListener(e -> tbPanel.setSelectedIndex(3));
-
 
         if (btnBuscarArch != null) {
             btnBuscarArch.addActionListener(e -> JOptionPane.showMessageDialog(null, "Buscando Archivo\n"+"¡Por favor Espere!"));
@@ -157,7 +169,6 @@ public class Menu_Principal {
                 }
             });
         }
-
 
         if (btnRegresar != null) {
             btnRegresar.addActionListener(e -> tbPanel.setSelectedIndex(tbPanel.getSelectedIndex() - 1));
@@ -182,19 +193,20 @@ public class Menu_Principal {
                 if (textField5.getText().isEmpty() || textField6.getText().isEmpty() || textField7.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Rellene Nombre, CURP y RFC para agregar al Instructor", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    // Captura los valores (Asumiendo los bindings de la tabla anterior)
+                    // Captura los valores
                     String nombre = textField5.getText();
                     String curp = textField6.getText();
                     String rfc = textField7.getText();
-                    String nivelAcademico = textField8.getText(); // O del JComboBox si lo mapeaste diferente
+                    String nivelAcademico = comboBox1 != null ? (String) comboBox1.getSelectedItem() : "";
                     String especialidad = textField9.getText();
+                    String correo = textField10.getText();
+                    String contrasena = textField11.getText();
 
                     // CAPTURA DE DATOS ACADÉMICOS
-                    // Nota: Usa el binding real de tu JComboBox (ej: comboBox2 o comboBox3)
-                    String formacionAcademica = (String) comboBoxFormacion.getSelectedItem();
-                    String institucion = textFieldInstitucion.getText();
-                    String titulacion = textFieldTitulacion.getText();
-                    String cedula = textFieldCedula.getText();
+                    String formacionAcademica = comboBoxFormacion != null ? (String) comboBoxFormacion.getSelectedItem() : "";
+                    String institucion = textFieldInstitucion != null ? textFieldInstitucion.getText() : "";
+                    String titulacion = textFieldTitulacion != null ? textFieldTitulacion.getText() : "";
+                    String cedula = textFieldCedula != null ? textFieldCedula.getText() : "";
 
                     // AÑADIMOS 9 CAMPOS A LA TABLA
                     tablaRegistros.addRow(new Object[]{
@@ -204,15 +216,8 @@ public class Menu_Principal {
 
                     JOptionPane.showMessageDialog(null, "Instructor Agregado con Datos Académicos");
 
-                    // Limpiar campos después de agregar (Asegúrate de limpiar todos los campos relevantes)
-                    textField5.setText(""); textField6.setText(""); textField7.setText("");
-                    textField8.setText(""); textField9.setText("");
-
-                    // Limpiar campos académicos
-                    // comboBoxFormacion.setSelectedIndex(0); // Si quieres resetear el combo
-                    textFieldInstitucion.setText("");
-                    textFieldTitulacion.setText("");
-                    textFieldCedula.setText("");
+                    // Limpiar campos después de agregar
+                    limpiarCampos();
                 }
             });
         }
@@ -229,11 +234,125 @@ public class Menu_Principal {
             });
         }
 
+        // ActionListener para el botón Aceptar en Datos del Curso
+        if (btnAceptar != null) {
+            btnAceptar.addActionListener(e -> {
+                if (txtNomCurso.getText().isEmpty() || txtClaveCurso.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Rellene Nombre y Clave del Curso", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Obtener días seleccionados
+                    StringBuilder dias = new StringBuilder();
+                    if (lunesCheckBox != null && lunesCheckBox.isSelected()) dias.append("Lun ");
+                    if (martesCheckBox != null && martesCheckBox.isSelected()) dias.append("Mar ");
+                    if (miercolesCheckBox != null && miercolesCheckBox.isSelected()) dias.append("Mié ");
+                    if (juevesCheckBox != null && juevesCheckBox.isSelected()) dias.append("Jue ");
+                    if (chbViernes != null && chbViernes.isSelected()) dias.append("Vie ");
+
+                    // Agregar a la tabla
+                    if (tablaCursos != null) {
+                        tablaCursos.addRow(new Object[]{
+                                txtNomCurso.getText(),
+                                txtClaveCurso.getText(),
+                                cboPeriodo != null ? cboPeriodo.getSelectedItem() : "",
+                                (cboHoraI != null ? cboHoraI.getSelectedItem() : "") + " - " + (cboHoraF != null ? cboHoraF.getSelectedItem() : ""),
+                                dias.toString().trim(),
+                                txtArchivoP.getText()
+                        });
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Curso Agregado");
+
+                    // Limpiar campos
+                    limpiarCamposCurso();
+                }
+            });
+        }
+
+        // Modificar el ActionListener del botón Eliminar
+        if (eliminarButton != null) {
+            eliminarButton.addActionListener(e -> {
+                int filaSeleccionada = tbRegistros.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    tablaRegistros.removeRow(filaSeleccionada);
+                    JOptionPane.showMessageDialog(null, "Instructor Eliminado");
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Seleccione un instructor para eliminar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        }
+
+        // ACTION LISTENERS PARA ASISTENCIAS
+        if (btnAgregarFecha != null) {
+            btnAgregarFecha.addActionListener(e -> {
+                if (textFieldFecha.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingrese una fecha", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Agregar columna para la nueva fecha
+                    tablaAsistencias.addColumn(textFieldFecha.getText());
+                    JOptionPane.showMessageDialog(null, "Fecha agregada para registro de asistencias");
+                }
+            });
+        }
+
+        if (btnGuardarAsistencia != null) {
+            btnGuardarAsistencia.addActionListener(e -> {
+                JOptionPane.showMessageDialog(null, "Asistencias guardadas correctamente");
+            });
+        }
+
+        if (btnLimpiarAsistencia != null) {
+            btnLimpiarAsistencia.addActionListener(e -> {
+                tablaAsistencias.setRowCount(0);
+                JOptionPane.showMessageDialog(null, "Registros de asistencia limpiados");
+            });
+        }
+
+        if (btnReporteAsistencia != null) {
+            btnReporteAsistencia.addActionListener(e -> {
+                JOptionPane.showMessageDialog(null, "Generando reporte de asistencias...");
+            });
+        }
+
+        if (btnRegresarAsistencia != null) {
+            btnRegresarAsistencia.addActionListener(e -> {
+                tbPanel.setSelectedIndex(0);
+            });
+        }
+
         if (actualizarButton1 != null) actualizarButton1.addActionListener(e -> JOptionPane.showMessageDialog(null, "Dato Actualizado"));
         if (actualizarButton != null) actualizarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Instructor Actualizado"));
-        if (eliminarButton != null) eliminarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Instructor Eliminado"));
         if (editarButton != null) editarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Datos Editados"));
         if (cancelarButton != null) cancelarButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Acción Cancelada"));
+    }
+
+    // Método para limpiar todos los campos
+    private void limpiarCampos() {
+        textField5.setText(""); textField6.setText(""); textField7.setText("");
+        if (comboBox1 != null) comboBox1.setSelectedIndex(0);
+        textField9.setText(""); textField10.setText(""); textField11.setText("");
+
+        // Limpiar campos académicos
+        if (comboBoxFormacion != null) comboBoxFormacion.setSelectedIndex(0);
+        if (textFieldInstitucion != null) textFieldInstitucion.setText("");
+        if (textFieldTitulacion != null) textFieldTitulacion.setText("");
+        if (textFieldCedula != null) textFieldCedula.setText("");
+    }
+
+    // Método para limpiar campos del curso
+    private void limpiarCamposCurso() {
+        if (txtNomCurso != null) txtNomCurso.setText("");
+        if (txtClaveCurso != null) txtClaveCurso.setText("");
+        if (cboPeriodo != null) cboPeriodo.setSelectedIndex(0);
+        if (cboHoraI != null) cboHoraI.setSelectedIndex(0);
+        if (cboHoraF != null) cboHoraF.setSelectedIndex(0);
+        if (lunesCheckBox != null) lunesCheckBox.setSelected(false);
+        if (martesCheckBox != null) martesCheckBox.setSelected(false);
+        if (miercolesCheckBox != null) miercolesCheckBox.setSelected(false);
+        if (juevesCheckBox != null) juevesCheckBox.setSelected(false);
+        if (chbViernes != null) chbViernes.setSelected(false);
+        if (txtArchivoP != null) txtArchivoP.setText("");
     }
 
     private void setupWelcomePanel() {
@@ -267,6 +386,8 @@ public class Menu_Principal {
         configuracionTablaRegistrosBD();
         configuracionTablaExperiencia();
         configuracionTablaMateria();
+        configuracionTablaCursos();     // NUEVO
+        configuracionTablaAsistencias(); // NUEVO
     }
 
     private void configuracionTablaActividad() {
@@ -274,7 +395,7 @@ public class Menu_Principal {
             @Override
             public boolean isCellEditable(int row, int column){ return false; }
         };
-        String[] cabeceros = {"Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad", "Correo Electrónico", "Contraseña"};
+        String[] cabeceros = {"Actividad", "Porcentaje"};
         this.tablaActividad.setColumnIdentifiers(cabeceros);
         if (this.tbActividad != null) {
             this.tbActividad.setModel(tablaActividad);
@@ -303,7 +424,11 @@ public class Menu_Principal {
             public boolean isCellEditable(int row, int column){ return false; }
         };
 
-        String[] cabeceros = {"Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad", "Formación Académica", "Institución", "Titulación (Año)", "Cédula"};        this.tablaRegistros.setColumnIdentifiers(cabeceros);
+        String[] cabeceros = {
+                "Nombre", "CURP", "RFC", "Nivel Academico", "Especialidad",
+                "Formación Académica", "Institución", "Titulación (Año)", "Cédula"
+        };
+        this.tablaRegistros.setColumnIdentifiers(cabeceros);
 
         if (this.tbRegistros != null) {
             this.tbRegistros.setModel(tablaRegistros);
@@ -380,6 +505,73 @@ public class Menu_Principal {
                 }
             };
             this.tbMateria.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
+    }
+
+    // MÉTODO PARA CONFIGURAR TABLA DE CURSOS
+    private void configuracionTablaCursos() {
+        this.tablaCursos = new DefaultTableModel(0, 6) {
+            @Override
+            public boolean isCellEditable(int row, int column){ return false; }
+        };
+
+        String[] cabeceros = {
+                "Nombre del Curso", "Clave", "Periodo", "Horario", "Días", "Programa"
+        };
+        this.tablaCursos.setColumnIdentifiers(cabeceros);
+
+        if (this.tbCursos != null) {
+            this.tbCursos.setModel(tablaCursos);
+            this.tbCursos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100));
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbCursos.getTableHeader().setDefaultRenderer(headerRenderer);
+        }
+    }
+
+    // MÉTODO PARA CONFIGURAR TABLA DE ASISTENCIAS
+    private void configuracionTablaAsistencias() {
+        this.tablaAsistencias = new DefaultTableModel(0, 4) {
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return column >= 2; // Solo las columnas de asistencia son editables
+            }
+        };
+
+        String[] cabeceros = {"Nombre", "Matrícula", "Asistencia", "Observaciones"};
+        this.tablaAsistencias.setColumnIdentifiers(cabeceros);
+
+        if (this.tbAsistencias != null) {
+            this.tbAsistencias.setModel(tablaAsistencias);
+
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value,
+                                                               boolean isSelected, boolean hasFocus,
+                                                               int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    c.setBackground(new Color(69, 90, 100));
+                    c.setForeground(Color.WHITE);
+                    c.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    setHorizontalAlignment(JLabel.CENTER);
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE));
+                    return c;
+                }
+            };
+            this.tbAsistencias.getTableHeader().setDefaultRenderer(headerRenderer);
         }
     }
 }
